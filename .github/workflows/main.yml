@@ -4,20 +4,25 @@ on:
   push:
     branches:
       - main  # Substitua pelo nome da sua branch principal
+  workflow_dispatch:  # Isso permite o acionamento manual do workflow
 
 jobs:
   build:
     runs-on: ubuntu-latest  # Define o sistema operacional onde o script será executado
 
     steps:
-    - uses: actions/checkout@v2  # Passo para baixar o código do repositório
+    - name: Checkout do repositório
+      uses: actions/checkout@v2  # Passo para baixar o código do repositório
 
     - name: Configuração do Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'  # Versão do Node.js a ser usada
 
-    - run: npm install  # Instala as dependências do projeto
+    - name: Instalação das dependências
+      run: |
+        npm install selenium-webdriver chromedriver
 
     - name: Executa Script de Automação
-      run: node boosteroid-automation.js  # Substitua pelo nome do seu arquivo JavaScript
+      run: |
+        node boosteroid-automation.js  # Substitua pelo nome do seu arquivo JavaScript
